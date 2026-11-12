@@ -47,7 +47,7 @@ const Login = () => {
 
     console.log("Login Data:", formData);
 
-    const res = await axios.post("http://localhost:5000/api/auth/login", formData, {withCredentials: true});
+    const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/api/auth/login`, formData, {withCredentials: true});
     if(res){
       navigate("/");
       setUser(res.data.user);
