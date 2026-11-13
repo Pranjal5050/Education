@@ -5,23 +5,9 @@ dotenv.config();
 const cors = require("cors");
 
 // Middleware
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://pexis.netlify.app/",
-];
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Postman/curl jaise requests ke liye
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: "https://pexis.netlify.app/",
     credentials: true,
   })
 );
