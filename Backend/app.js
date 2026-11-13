@@ -7,7 +7,7 @@ const cors = require("cors");
 // Middleware
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://your-site.netlify.app",
+  "https://pexis.netlify.app/",
 ];
 
 app.use(
