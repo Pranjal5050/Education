@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { ToastContainer, toast } from 'react-toastify';
 import {
   User,
   Mail,
@@ -44,21 +45,34 @@ const Signup = () => {
   };
 
   const handleSubmit =async (e) => {
-    e.preventDefault();
+
+
+    try {
+      e.preventDefault();
 
     const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/api/auth/register`, formData, {withCredentials: true});
     if(res){
-      navigate("/");
       setUser(res.data.user);
+
       localStorage.setItem("token", res.data.token);
+      
+      toast.success("Login successful! 🎉");
+
+      navigate("/");
+    }
+    } catch (error) {
+      console.log("Login Error:", error);
+      
+          toast.error(
+            error.response?.data?.message || "Something went wrong"
+          );
     }
 
-    // Backend API yahan call kar sakte ho
-    // axios.post("/api/auth/register", formData)
   };
 
   return (
     <div className="min-h-screen bg-white text-[#07164d]">
+      <ToastContainer/>
 
       {/* ================= NAVBAR ================= */}
 

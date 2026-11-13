@@ -1,5 +1,5 @@
-
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const quickLinks = [
   { name: "Home", href: "#home" },
@@ -79,17 +79,17 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="lg:col-span-4">
-            <a
-              href="#home"
-              className="inline-flex items-center gap-2 text-3xl font-extrabold tracking-tight"
+
+            <Link
+              to="/"
+              className="inline-flex items-center"
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-xl text-white shadow-lg shadow-blue-600/20">
-                V
-              </span>
-              <span>
-                Ved<span className="text-blue-400">class</span>
-              </span>
-            </a>
+              <img
+                src="/images/logo.jpeg"
+                alt="Logo"
+                className="h-10 w-auto object-contain sm:h-11 lg:h-12 xl:h-14 rounded-full overflow-hidden"
+              />
+            </Link>
 
             <p className="mt-5 max-w-sm text-sm leading-7 text-blue-100/70">
               Learn better, score higher. Your learning companion for

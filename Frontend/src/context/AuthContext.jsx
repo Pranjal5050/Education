@@ -5,7 +5,7 @@ import axios from "axios";
 const AuthContext = createContext();
 
 // Backend URL
-const API_URL = "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_ENDPOINT;
 
 // Auth Provider
 export const AuthProvider = ({ children }) => {
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/auth/logout`,
+        `${import.meta.env.VITE_API_ENDPOINT}/api/auth/logout`,
         {},
         {
           withCredentials: true,

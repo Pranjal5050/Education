@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
 import {
   User,
   Mail,
@@ -42,24 +43,51 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    console.log("Login Data:", formData);
+  //   const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/api/auth/login`, formData, {withCredentials: true});
+  //   if(res){
+  //     navigate("/");
+  //     setUser(res.data.user);
+  //     localStorage.setItem("token", res.data.token);
+  //   }
+  // };
 
-    const res = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/api/auth/login`, formData, {withCredentials: true});
-    if(res){
-      navigate("/");
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await axios.post(
+      `${import.meta.env.VITE_API_ENDPOINT}/api/auth/login`,
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    if (res.data.success) {
       setUser(res.data.user);
-      localStorage.setItem("token", res.data.token);
-    }
 
-    // Backend API yahan call kar sakte ho
-    // axios.post("/api/auth/register", formData)
-  };
+      localStorage.setItem("token", res.data.token);
+
+      toast.success("Login successful! 🎉");
+
+      navigate("/");
+    }
+  } catch (error) {
+    console.log("Login Error:", error);
+
+    toast.error(
+      error.response?.data?.message || "Invalid email or password"
+    );
+  }
+};
 
   return (
     <div className="min-h-screen bg-white text-[#07164d]">
+      <ToastContainer />
 
       {/* ================= NAVBAR ================= */}
       <Navbar/>

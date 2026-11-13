@@ -22,13 +22,16 @@ export default function Navbar() {
     <header className="relative z-50 w-full border-b border-slate-200 bg-white">
       <nav className="mx-auto flex min-h-[62px] max-w-[1200px] items-center justify-between px-5 sm:px-8 lg:px-10">
 
-        {/* Logo */}
-        <a
-          href="#home"
-          className="shrink-0 text-[25px] font-extrabold tracking-[-1.3px] text-[#10234f]"
-        >
-          <span className="text-[#f59e0b]">V</span>edclass
-        </a>
+        <Link
+  to="/"
+  className="shrink-0 flex items-center"
+>
+  <img
+    src="/images/logo.jpeg"
+    alt="Logo"
+    className="h-8 w-auto sm:h-9 md:h-10 lg:h-11 xl:h-12 object-contain"
+  />
+</Link>
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-5 lg:flex xl:gap-6">
@@ -46,24 +49,6 @@ export default function Navbar() {
             </a>
           ))}
         </div>
-
-        {/* Desktop Buttons */}
-        {/* <div className="hidden shrink-0 items-center gap-2 lg:flex">
-          <Link to={"/login"}
-            className="rounded-full border border-slate-200 px-4 py-2 text-[12px] font-medium text-slate-800 transition hover:border-blue-500 hover:text-blue-600"
-          >
-            Login
-          </Link>
-
-          <Link
-            to={'/register'}
-            className="rounded-full bg-[#0866f5] px-4 py-2 text-[12px] font-semibold text-white shadow-sm transition hover:bg-blue-700"
-          >
-            Signup
-          </Link>
-        </div> */}
-
-
 
         <div className="hidden shrink-0 items-center gap-2 lg:flex">
   {!loading && (
@@ -100,11 +85,6 @@ export default function Navbar() {
   )}
 </div>
 
-
-
-
-
-
         {/* Mobile Hamburger */}
         <button
           type="button"
@@ -132,47 +112,83 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile Dropdown */}
-      {menuOpen && (
-        <div className="absolute left-0 top-full w-full border-t border-slate-100 bg-white px-5 pb-5 pt-3 shadow-lg lg:hidden">
-          <div className="flex flex-col">
-            {navLinks.map((link, index) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className={`rounded-lg px-3 py-3 text-sm font-medium transition hover:bg-blue-50 hover:text-blue-600 ${
-                  index === 0
-                    ? "bg-blue-50 text-blue-600"
-                    : "text-slate-700"
-                }`}
-              >
-                {link.name}
-              </a>
-            ))}
+{/* Mobile Dropdown */}
+{menuOpen && (
+  <div className="absolute left-0 top-full w-full border-t border-slate-100 bg-white px-5 pb-5 pt-3 shadow-lg lg:hidden">
+
+    <div className="flex flex-col">
+      {navLinks.map((link, index) => (
+        <a
+          key={link.name}
+          href={link.href}
+          onClick={() => setMenuOpen(false)}
+          className={`rounded-lg px-3 py-3 text-sm font-medium transition hover:bg-blue-50 hover:text-blue-600 ${
+            index === 0
+              ? "bg-blue-50 text-blue-600"
+              : "text-slate-700"
+          }`}
+        >
+          {link.name}
+        </a>
+      ))}
+    </div>
+
+    {/* Authentication Buttons */}
+    {!loading && (
+      user ? (
+        <div className="mt-4 flex items-center gap-3">
+
+          {/* Welcome */}
+          <div className="flex-1 rounded-full bg-slate-50 px-4 py-2.5 text-center text-sm font-medium text-slate-700">
+            Welcome, {user.firstName} 👋
           </div>
 
-          <div className="mt-4 flex gap-3">
-            <Link to={"/login"}
-              onClick={() => setMenuOpen(false)}
-              className="flex-1 rounded-full border border-slate-200 py-2.5 text-center text-sm font-medium text-slate-800"
-            >
-              Login
-            </Link>
+          {/* Logout */}
+          <button
+            onClick={async () => {
+              await logout();
+              setMenuOpen(false);
+            }}
+            className="rounded-full bg-red-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-600"
+          >
+            Logout
+          </button>
 
-            <Link to={'/register'}
-              onClick={() => setMenuOpen(false)}
-              className="flex-1 rounded-full bg-[#0866f5] py-2.5 text-center text-sm font-semibold text-white"
-            >
-              Signup
-            </Link>
-          </div>
-
-
-
-          
         </div>
-      )}
+      ) : (
+        <div className="mt-4 flex gap-3">
+
+          <Link
+            to="/login"
+            onClick={() => setMenuOpen(false)}
+            className="flex-1 rounded-full border border-slate-200 py-2.5 text-center text-sm font-medium text-slate-800"
+          >
+            Login
+          </Link>
+
+          <Link
+            to="/register"
+            onClick={() => setMenuOpen(false)}
+            className="flex-1 rounded-full bg-[#0866f5] py-2.5 text-center text-sm font-semibold text-white"
+          >
+            Signup
+          </Link>
+
+        </div>
+      )
+    )}
+
+  </div>
+)}
+
+
+
+
+
+
+
+
+
     </header>
   );
 }
